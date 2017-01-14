@@ -22,11 +22,6 @@ Part 1: Discussion
 # Parts 2 through 5:
 # Create your classes and class methods
 
-"""
-Part 2: Classes and Init Methods
-
-"""
-
 
 class Student(object):
     """A student."""
@@ -47,7 +42,7 @@ class Student(object):
         student_dictionary["last_name"] = self.last_name
         student_dictionary["address"] = self.address
 
-        return student_dictionary       # dictionary is unordered, unlike prompt
+        return student_dictionary       # dictionary is unordered
 
 
 class Question(object):
@@ -69,6 +64,15 @@ class Question(object):
 
         return question_dictionary
 
+    def ask_and_evaluate(self):
+        """Prompt user for answer to question and return True or False."""
+
+        user_answer = raw_input(self.question + " ")
+        if user_answer == self.answer:
+            return True
+        else:
+            return False
+
 
 class Exam(object):
     """A midterm or final exam."""
@@ -82,11 +86,12 @@ class Exam(object):
     def add_question(self, question, correct_answer):
         """Add question and answer to self.questions list."""
 
-        self = Question(question, correct_answer)
+        new_question = Question(question, correct_answer)
+        new_question = new_question.make_question_dictionary()
 
-        self.make_question_dictionary()
+        self.questions.append(new_question)
 
-        return self.question_dictionary
+        return self.questions
 
     def make_exam(self):
         """Create dictionary containing exam type, questions, and answers."""
@@ -98,8 +103,19 @@ class Exam(object):
 
         return exam_dictionary
 
+    def administer(self):
+        """Prompt user for answer to exam question, return user's score."""
 
-"""
-Part 3: Methods
+        user_score = 0
+        perfect_score = 0
 
-"""
+        # problems:
+        for question in self.questions:
+            user_answer = question["question"].ask_and_evaluate()
+            if user_answer is True:
+                user_score += 1
+            perfect_score += 1
+
+        user_percentage = float(user_score) / perfect_score
+
+        return user_percentage
