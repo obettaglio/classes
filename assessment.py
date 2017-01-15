@@ -107,6 +107,7 @@ class Exam(object):
 
         self.name = name
         self.questions = []
+        exam_dictionary = {}
 
     def add_question(self, question, correct_answer):
         """Add question and answer to self.questions list."""
@@ -121,12 +122,12 @@ class Exam(object):
     def make_exam(self):
         """Create dictionary containing exam type, questions, and answers."""
 
-        exam_dictionary = {}
+        self.exam_dictionary = {}
 
-        exam_dictionary["name"] = self.name
-        exam_dictionary["questions"] = self.questions
+        self.exam_dictionary["name"] = self.name
+        self.exam_dictionary["questions"] = self.questions
 
-        return exam_dictionary
+        return self.exam_dictionary
 
     def administer(self):
         """Prompt user for answer to exam question, return user's score."""
@@ -134,9 +135,9 @@ class Exam(object):
         user_score = 0
         perfect_score = 0
 
-        # problems:
-        for question in self.questions:
-            user_answer = question["question"].ask_and_evaluate()
+        # problem:
+        for question in self.exam_dictionary["questions"]:
+            user_answer = question.ask_and_evaluate()
             if user_answer is True:
                 user_score += 1
             perfect_score += 1
@@ -144,3 +145,46 @@ class Exam(object):
         user_percentage = float(user_score) / perfect_score
 
         return user_percentage
+
+
+class Quiz(Exam):
+    """A pass/fail quiz."""
+
+    def __init__(self):
+        super(Quiz, self).__init__("quiz")
+
+    def administer(self):
+        """Prompt user for answer to quiz question, return Pass or Fail."""
+
+        user_score = 0
+        perfect_score = 0
+
+        for question in self.questions:
+            user_answer = question["question"].ask_and_evaluate()
+            if user_answer is True:
+                user_score += 1
+            perfect_score += 1
+
+        if (float(user_score) / perfect_score) >= 0.5:
+            return "Pass"
+        else:
+            return "Fail"
+
+
+def take_test(exam, student):
+    """Administer exam and assign score to student instance."""
+
+    score = exam.administer()
+    student.score = score
+
+
+def example():
+    """Create example exam and student, administer exam, and assign score to student instance."""
+
+    new_exam = Exam("final")
+    new_exam.add_question("Are you a happy coder?", "Yes!")
+    new_exam.add_question("Who is the best instructor at Hackbright?", "Balloonicorn!")
+
+    new_student = Student("Olivia", "Bettaglio", "San Francisco")
+
+    take_test(new_exam, new_student)
