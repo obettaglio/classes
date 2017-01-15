@@ -4,16 +4,41 @@ Part 1: Discussion
 1. What are the three main design advantages that object orientation
    can provide? Explain each concept.
 
+   Encapsulation: the ability to package information and tasks together for ease of use.
+   Abstraction: the ability to trust the package to complete its internal processes without user oversight.
+   Polymorphism: the ability to apply one package of class attributes to multiple different objects.
+
 2. What is a class?
+
+    A class is a type of object that collects similar information about all of its instances.
+    It has the ability to establish common attributes at each instance's instantiation while still
+    providing painless adjustment for individual instances if necessary.
 
 3. What is an instance attribute?
 
+    An instance attribute is a characteristic of the instance that is not necessarily shared by
+    other instances of the same class. It is specific to the instance, and will be referred to
+    first when checking for any attribute.
+
 4. What is a method?
+
+    A method is a function within a class that can be called by all instances and subclasses.
 
 5. What is an instance in object orientation?
 
+    An instance is an individual object created from a class and inheriting its class attributes
+    and methods.
+
 6. How is a class attribute different than an instance attribute?
    Give an example of when you might use each.
+
+   A class attribute is common for all instances created under it. It is an easy way to
+   standardize the definition of the class, while leaving room for exceptions.
+
+   An instance attribute is specific to the instance. Since it is viewed first by Python,
+   its existence overrides any class attributes above it. This is useful for an object that
+   has many shared characteristics with other instances of a class, but behaves differently
+   in one or two aspects.
 
 
 """
