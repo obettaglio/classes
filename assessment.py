@@ -92,7 +92,7 @@ class Question(object):
     def ask_and_evaluate(self):
         """Prompt user for answer to question and return True or False."""
 
-        user_answer = raw_input(self.question + " ")
+        user_answer = raw_input(self.question + " > ")
         if user_answer == self.answer:
             return True
         else:
@@ -107,7 +107,6 @@ class Exam(object):
 
         self.name = name
         self.questions = []
-        exam_dictionary = {}
 
     def add_question(self, question, correct_answer):
         """Add question and answer to self.questions list."""
@@ -136,15 +135,18 @@ class Exam(object):
         perfect_score = 0
 
         # problem:
-        for question in self.exam_dictionary["questions"]:
-            user_answer = question.ask_and_evaluate()
+        for question_answer_dict in self.questions:
+            # question = question_answer_dict["question"]
+            # answer = question_answer_dict["answer"]
+            # question_answer_list = [question, answer]
+            user_answer = self.ask_and_evaluate()       # self is a dictionary, needs to be a Question instance
             if user_answer is True:
                 user_score += 1
             perfect_score += 1
 
-        user_percentage = float(user_score) / perfect_score
+        self.user_percentage = float(user_score) / perfect_score
 
-        return user_percentage
+        return self.user_percentage
 
 
 class Quiz(Exam):
